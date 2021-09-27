@@ -9,13 +9,16 @@ from airflow.operators.python import PythonOperator
 def _say_hello():
     logging.info("Hello, SAKSIAM")
 
+def _log_message():
+    logging.info('This is log message')
+
 default_args={
     "start_date": timezone.datetime(2021, 9, 27)
 }
 
 with DAG(
-    "my_dag",
-    schedule_interval="*/10 * * * *",
+    "homework1_2",
+    schedule_interval="*/30 * * * *",
     default_args=default_args,
     catchup=False,
     tags=["saksiam"]
@@ -32,7 +35,12 @@ with DAG(
         task_id="say_hello",
         python_callable=_say_hello,
     )
+
+    print_log_message = PythonOperator(
+        task_id="print_log_message",
+        python_callable=_log_message,
+    )
     
     end = DummyOperator(task_id="end")
 
-    start >> [echo_hello, say_hello] >> end
+    start >> echo_hello >> say_hello >> print_log_message >> end

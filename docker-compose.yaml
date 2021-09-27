@@ -49,8 +49,8 @@ services:
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
+      # airflow-init:
+      #   condition: service_completed_successfully
 
   airflow-scheduler:
     <<: *airflow-common
@@ -63,8 +63,8 @@ services:
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
+      # airflow-init:
+      #   condition: service_completed_successfully
 
   # airflow-init:
   #   <<: *airflow-common
